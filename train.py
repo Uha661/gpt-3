@@ -57,7 +57,8 @@ def main():
 
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
-    with tf.Session(config=config) as sess:
+    #  with tf.Session(config=config) as sess:
+    with tf.Session() as sess:
         context = tf.placeholder(tf.int32, [args.batch_size, None])
         output = model.model(hparams=hparams, X=context)
         loss = tf.reduce_mean(
