@@ -46,6 +46,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
         # TODO: Would be slightly faster if we called step on the entire context,
         # rather than leaving the last token transformer calculation to the while loop.
         context_output = step(hparams, context[:, :-1])
+        print(context_output)
 
         def body(past, prev, output):
             next_outputs = step(hparams, prev[:, tf.newaxis], past=past)
@@ -53,8 +54,8 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             
             logits = top_k_logits(logits, k=1)
             
-            top_10,_=tf.nn.top_k(logits,k=10,sorted=True,name='probablities')
-            top_10=tf.to_int32(top_10)
+            _,top_10=tf.nn.top_k(logits,k=10,sorted=True,name='probablities')
+            
             print(top_10)
 
             samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
