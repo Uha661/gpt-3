@@ -50,6 +50,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
 
         def body(past, prev, output):
             next_outputs = step(hparams, prev[:, tf.newaxis], past=past)
+            print(next_outputs)
             logits = next_outputs['logits'][:, -1, :]  / tf.to_float(temperature)
             
             logits = top_k_logits(logits, k=1)
@@ -65,7 +66,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             return [
                 tf.concat([past, next_outputs['presents']], axis=-2),
                 tf.squeeze(samples, axis=[1]),
-                tf.concat([output, samples], axis=1),top_10
+                tf.concat([output, samples], axis=1),
             ]
 
         def cond(*args):
