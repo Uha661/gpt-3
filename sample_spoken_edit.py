@@ -58,7 +58,9 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             print(top_10)
 
             samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
-            
+            print(next_outputs['presents'])
+            print(output)
+            print(samples)
             return [
                 tf.concat([past, next_outputs['presents']], axis=-2),
                 tf.squeeze(samples, axis=[1]),
@@ -66,7 +68,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             ]
 
         def cond(*args):
-            return False
+            return True
 
         _, _, tokens = tf.while_loop(
             cond=cond, body=body,
