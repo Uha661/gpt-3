@@ -17,13 +17,7 @@ import tensorflow as tf
 import json
 import model, sample, encoder
 
-def interact_model(
-    model_name='117M',
-    seed=None,
-    nsamples=1,
-    batch_size=1,
-    length=1,
-    temperature=1,top_k=10,input_test_file):
+def interact_model(model_name='117M', seed=None, nsamples=1, batch_size=1, length=1, temperature=1, top_k=10, input_test_file):
     """
     Interactively run the model
     :model_name=117M : String, which model to use
