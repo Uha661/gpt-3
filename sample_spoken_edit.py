@@ -59,7 +59,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             #print(samples)
             return [
                 tf.concat([past, next_outputs['presents']], axis=-2),
-                tf.concat(top_10, axis=[1]),
+                tf.concat(top_10, axis=1),
                 tf.concat([output, samples], axis=1),
             ]
 
