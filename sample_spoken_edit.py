@@ -58,7 +58,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             _,top_10=tf.nn.top_k(logits,k=10,sorted=True,name='probablities')
             
 
-            samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
+            samples = tf.multinomial(top_10, num_samples=10, output_dtype=tf.int32)
             
             
             return [
