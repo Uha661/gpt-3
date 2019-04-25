@@ -77,7 +77,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             loop_vars=[
                 context_output['presents'],
                 context[:, -1],
-                context,top_10
+                context,
             ],
             shape_invariants=[
                 tf.TensorShape(model.past_shape(hparams=hparams, batch_size=batch_size)),
