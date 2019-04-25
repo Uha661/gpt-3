@@ -11,6 +11,7 @@ from interactive_conditional_samples import interact_model
 
 import fire
 import json
+import time 
 import os
 import numpy as np
 import tensorflow as tf
