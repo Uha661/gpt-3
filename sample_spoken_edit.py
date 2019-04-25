@@ -51,14 +51,15 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             next_outputs = step(hparams, prev[:, tf.newaxis], past=past)
             logits = next_outputs['logits'][:, -1, :]  / tf.to_float(temperature)
             print(logits)
-            logits = top_k_logits(logits, k=10)
-            print(logits)
-           #tf.nn.top_k(split2,k=10,sorted=True,name='probablities')
-            samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
-            print(samples)
+            #logits = top_k_logits(logits, k=10)
+            #print(logits)
+            top_10,_=tf.nn.top_k(logits,k=10,sorted=True,name='probablities')
+            print(top_10)
+            #samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
+            #print(samples)
             return [
                 tf.concat([past, next_outputs['presents']], axis=-2),
-                tf.squeeze(samples, axis=[1]),
+                tf.squeeze(top_10, axis=[1]),
                 tf.concat([output, samples], axis=1),
             ]
 
