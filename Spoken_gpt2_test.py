@@ -50,10 +50,14 @@ def interact_model(
     if batch_size is None:
         batch_size = 1
     assert nsamples % batch_size == 0
+## ???   we have to get the right encoder and h params. json in the model    (encode.json is a word_id dictionary )
+#?? vocab.bpe is the vocab_list thats being used inside encoder we should provide these files in order to test, if they are not saved automatically. 
 
+# word_to_id that we have cannot be used beacuse we have cleaned that data with a different dictionary, so now we may need to look at encode.py dictioanry 
     enc = encoder.get_encoder(model_name)
     hparams = model.default_hparams()
-    with open(os.path.join('models', model_name, 'hparams.json')) as f:
+    #with open(os.path.join('models', model_name, 'hparams.json')) as f
+    with open(os.path.join('checkpoint', model_name, 'hparams.json')) as f:
         hparams.override_from_dict(json.load(f))
 
     if length is None:
