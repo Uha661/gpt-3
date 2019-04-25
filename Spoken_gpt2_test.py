@@ -96,7 +96,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
 
 
 
-interact_model(input_test_file='gpt-3_test_input.json', model_name='117M',seed=None,nsamples=1,batch_size=1,length=10,temperature=1,top_k=1)
+interact_model(input_test_file='gpt-3_test_input.json', model_name='117M',seed=None,nsamples=2,batch_size=1,length=1,temperature=1,top_k=1)
 
 
 # my intial plan is to run the model with in the for loop of inputs from json file, but if we do that each time we have to load the model and do single prediction
@@ -117,25 +117,6 @@ interact_model(input_test_file='gpt-3_test_input.json', model_name='117M',seed=N
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-interact_model(
-    model_name='117M',
-    seed=None,
-    nsamples=1,batch_size=1,length=1,temperature=1,top_k=10)
 
 
 
