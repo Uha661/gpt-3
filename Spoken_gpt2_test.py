@@ -72,7 +72,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
 
         saver = tf.train.Saver()
         # chnage the name of the check point file if required 
-        ckpt = tf.train.latest_checkpoint(os.path.join('models', model_name))
+        ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
         saver.restore(sess, ckpt)
         start_time = time.time()
 
