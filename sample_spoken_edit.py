@@ -62,11 +62,11 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             print(next_outputs['presents'])
             print(output)
             print(samples)
-            return [
-                tf.concat([past, next_outputs['presents']], axis=-2),
-                tf.squeeze(samples, axis=[1]),
-                tf.concat([output, samples], axis=1),
-            ]
+            #return [
+             #   tf.concat([past, next_outputs['presents']], axis=-2),
+              ## tf.concat([output, samples], axis=1),
+            #]
+            return top_10
 
         def cond(*args):
             return True
