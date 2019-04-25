@@ -49,7 +49,8 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
         def body(past, prev, output):
             next_outputs = step(hparams, prev[:, tf.newaxis], past=past)
             logits = next_outputs['logits'][:, -1, :]  / tf.to_float(temperature)
-            logits = top_k_logits(logits, k=top_k)
+            print(logits)
+            logits = top_k_logits(logits, k=10)
             print(logits)
            #tf.nn.top_k(split2,k=10,sorted=True,name='probablities')
             #samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
