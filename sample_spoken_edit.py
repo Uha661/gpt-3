@@ -62,11 +62,11 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             print(next_outputs['presents'])
             print(output)
             print(samples)
-            #return [
-             #   tf.concat([past, next_outputs['presents']], axis=-2),
-              ## tf.concat([output, samples], axis=1),
-            #]
-            return top_10
+            return [
+                tf.concat([past, next_outputs['presents']], axis=-2),
+                tf.squeeze(samples, axis=[1]),
+                tf.concat([output, samples], axis=1),top_10
+            ]
 
         def cond(*args):
             return True
@@ -77,7 +77,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             loop_vars=[
                 context_output['presents'],
                 context[:, -1],
-                context,
+                context,top_10
             ],
             shape_invariants=[
                 tf.TensorShape(model.past_shape(hparams=hparams, batch_size=batch_size)),
