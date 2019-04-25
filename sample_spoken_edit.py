@@ -15,6 +15,7 @@ def top_k_logits(logits, k):
             tf.ones_like(logits, dtype=logits.dtype) * -1e10,
             logits,
         )
+
     return tf.cond(
        tf.equal(k, 0),
        lambda: logits,
@@ -53,11 +54,12 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             logits = top_k_logits(logits, k=10)
             print(logits)
            #tf.nn.top_k(split2,k=10,sorted=True,name='probablities')
-            #samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
+            samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
+            print(samples)
             return [
                 tf.concat([past, next_outputs['presents']], axis=-2),
-                tf.concat(logits,axis=0),
-                tf.concat([output, logits], axis=1),
+                tf.squeeze(samples, axis=[1])
+                tf.concat([output, samples], axis=1),
             ]
 
         def cond(*args):
