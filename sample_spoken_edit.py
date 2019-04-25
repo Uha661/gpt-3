@@ -51,7 +51,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             next_outputs = step(hparams, prev[:, tf.newaxis], past=past)
             logits = next_outputs['logits'][:, -1, :]  / tf.to_float(temperature)
             
-            logits = top_k_logits(logits, k=10)
+            logits = top_k_logits(logits, k=1)
             
             top_10,_=tf.nn.top_k(logits,k=10,sorted=True,name='probablities')
             top_10=tf.to_int32(top_10)
