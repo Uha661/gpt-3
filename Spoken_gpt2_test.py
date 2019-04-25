@@ -4,7 +4,6 @@ import os
 import numpy as np
 import tensorflow as tf
 
-from interactive_conditional_samples import interact_model
 
 
 #!/usr/bin/env python3
@@ -16,7 +15,7 @@ import os
 import numpy as np
 import tensorflow as tf
 import json
-import model, sample, encoder
+import model, sample_spoken_edit, encoder
 
 def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1, batch_size=1, length=1, temperature=1, top_k=10, ):
     """
@@ -54,7 +53,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
         context = tf.placeholder(tf.int32, [batch_size, None])
         
 
-        output = sample.sample_sequence(
+        output = sample_spoken_edit.sample_sequence(
             hparams=hparams, length=length,
             context=context,
             batch_size=batch_size,
@@ -88,7 +87,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
 
 
 
-interact_model(input_test_file='gpt-3_test_input.json', model_name='117M',seed=None,nsamples=1,batch_size=1,length=1,temperature=1,top_k=1)
+interact_model(input_test_file='gpt-3_test_input.json', model_name='117M',seed=None,nsamples=1,batch_size=1,length=1,temperature=1,top_k=10)
 
 
 # my intial plan is to run the model with in the for loop of inputs from json file, but if we do that each time we have to load the model and do single prediction
