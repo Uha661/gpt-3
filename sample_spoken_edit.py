@@ -69,7 +69,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             return True
 
         _, _, tokens = tf.while_loop(
-            cond=cond, body=body,
+            cond=False, body=body,
             maximum_iterations=length,
             loop_vars=[
                 context_output['presents'],
