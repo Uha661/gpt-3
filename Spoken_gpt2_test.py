@@ -42,27 +42,18 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
     test_input.close()
     
 
-    if batch_size is None:
-        batch_size = 1
-    assert nsamples % batch_size == 0
-## ???   we have to get the right encoder and h params. json in the model    (encode.json is a word_id dictionary )
-#?? vocab.bpe is the vocab_list thats being used inside encoder we should provide these files in order to test, if they are not saved automatically. 
-### ??? simplest solutions is to test it with what we got for now ## we can just over write name of the model_name at a place 
-# word_to_id that we have cannot be used beacuse we have cleaned that data with a different dictionary, so now we may need to look at encode.py dictioanry 
+
     enc = encoder.get_encoder(model_name)
     hparams = model.default_hparams()
     with open(os.path.join('models', model_name, 'hparams.json')) as f:
         hparams.override_from_dict(json.load(f))
 
-    if length is None:
-        length = 1
+
 
     with tf.Session(graph=tf.Graph()) as sess:
         context = tf.placeholder(tf.int32, [batch_size, None])
         
 
-        #np.random.seed(seed)  #  lets see if we can run without random seed 
-        #tf.set_random_seed(seed)
         output = sample.sample_sequence(
             hparams=hparams, length=length,
             context=context,
@@ -87,8 +78,9 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
                     # since batch_size is one generated = text; but lets see how it works 
                     generated += 1
                     text = enc.decode(out[i])
-                    print("=" * 40 + " SAMPLE " + str(generated) + " " + "=" * 40)
+
                     print(text)
+                    print("=" * 80 )
                 print((time.time() - start_time))
 
     return print('done with predictions')
@@ -96,7 +88,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
 
 
 
-interact_model(input_test_file='gpt-3_test_input.json', model_name='117M',seed=None,nsamples=1,batch_size=1,length=1,temperature=1,top_k=10)
+interact_model(input_test_file='gpt-3_test_input.json', model_name='117M',seed=None,nsamples=1,batch_size=1,length=1,temperature=1,top_k=1)
 
 
 # my intial plan is to run the model with in the for loop of inputs from json file, but if we do that each time we have to load the model and do single prediction
