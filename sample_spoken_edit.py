@@ -57,12 +57,10 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             
             _,top_10=tf.nn.top_k(logits,k=10,sorted=True,name='probablities')
             
-            print(top_10)
 
             samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
-            print(next_outputs['presents'])
-            print(output)
-            print(samples)
+            
+            
             return [
                 tf.concat([past, next_outputs['presents']], axis=-2),
                 tf.squeeze(samples, axis=[1]),
