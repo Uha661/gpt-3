@@ -72,7 +72,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             maximum_iterations=length,
             loop_vars=[
                 context_output['presents'],
-                context[1, 1],
+                context[1, :],
                 context,
             ],
             shape_invariants=[
