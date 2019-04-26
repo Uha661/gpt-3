@@ -76,7 +76,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
             print(values)
             
             
-            for each_prediction_value in values:
+            for each_prediction_value in values.split():
             	top_10_predictions_word=enc.decode(each_prediction_value)
 
             	print(raw_text+' '+each_prediction_word+'\n')
