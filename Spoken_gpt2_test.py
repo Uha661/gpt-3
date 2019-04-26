@@ -77,7 +77,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
                 for i in range(10):
                     # since batch_size is one generated = text; but lets see how it works 
                     generated += 1
-                    text = enc.decode(out[i])
+                    text = enc.decode(out[0,i])
 
                     print(text)
                     print("=" * 80 )
