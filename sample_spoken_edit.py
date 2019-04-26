@@ -28,14 +28,14 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         assert context is not None, 'Specify exactly one of start_token and context!'
     else:
         assert context is None, 'Specify exactly one of start_token and context!'
-        context = tf.fill([batch_size, 1], start_token)
+        context = tf.fill([1, 1], start_token)
 
     def step(hparams, tokens, past=None):
         lm_output = model.model(hparams=hparams, X=tokens, past=past, reuse=tf.AUTO_REUSE)
 
         logits = lm_output['logits'][:, :, :hparams.n_vocab]
         presents = lm_output['present']
-        presents.set_shape(model.past_shape(hparams=hparams, batch_size=batch_size))
+        presents.set_shape(model.past_shape(hparams=hparams, 1))
         return {
             'logits': logits,
             'presents': presents,
@@ -81,9 +81,9 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
                 top_10,
             ],
             shape_invariants=[
-                tf.TensorShape(model.past_shape(hparams=hparams, batch_size=batch_size)),
-                tf.TensorShape([batch_size]),
-                tf.TensorShape([batch_size, None]),
+                tf.TensorShape(model.past_shape(hparams=hparams, 1)),
+                tf.TensorShape([1]),
+                tf.TensorShape([1, None]),
                 tf.TensorShape([1,10])
             ],
             back_prop=False,
