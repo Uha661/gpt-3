@@ -59,7 +59,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
             batch_size=batch_size,
             temperature=temperature, top_k=top_k
         )
-        print(output)
+        
         tf.print(output)
         saver = tf.train.Saver()
         # chnage the name of the check point file if required 
