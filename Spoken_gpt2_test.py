@@ -60,8 +60,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
             temperature=temperature, top_k=top_k
         )
         
-        tf.print(output1)
-        output=tf.zeros(shape=[1,10],dtype=tf.dtypes.int32,name=None)
+        tf.print(output)
         saver = tf.train.Saver()
         # chnage the name of the check point file if required 
         ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
@@ -73,7 +72,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
             context_tokens = enc.encode(raw_text)
             generated = 0
             for _ in range(nsamples // batch_size):
-                out = sess.run(output, feed_dict={context: [context_tokens for _ in range(batch_size)]})[:, len(context_tokens):]
+                out = sess.run(output, feed_dict={context: [context_tokens for _ in range(batch_size)]})[:,:]
                 print(out)
 
                 for i in range(batch_size):
