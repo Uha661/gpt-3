@@ -41,7 +41,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
     test_input.close()
     
 
-
+    start_time = time.time()
     enc = encoder.get_encoder(model_name)
     hparams = model.default_hparams()
     with open(os.path.join('models', model_name, 'hparams.json')) as f:
@@ -65,10 +65,11 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
         # chnage the name of the check point file if required 
         ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
         saver.restore(sess, ckpt)
-        start_time = time.time()
+        print(str((time.time() - start_time)*1000)+" time to intialise model")
 
 
         for raw_text in inputs_words:
+        	start_time = time.time()
             context_tokens = enc.encode(raw_text)
             out = sess.run(output, feed_dict={context: [context_tokens for _ in range(batch_size)]})
             print((time.time() - start_time)*1000)
