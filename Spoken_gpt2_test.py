@@ -71,12 +71,14 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
         for raw_text in inputs_words:
             context_tokens = enc.encode(raw_text)
             out = sess.run(output, feed_dict={context: [context_tokens for _ in range(batch_size)]})
+            print(out[0])
             top_10_predictions=enc.decode(out[0])
+            ptint(top_10_predictions)
             for each_prediction_word in top_10_predictions.split(): 
             	print(raw_text+' '+each_prediction_word+'\n')
-            	print("=" * 80 )
+            	
                 #print((time.time() - start_time))
-
+            print("=" * 80 )
     return print('done with predictions')
     
 
