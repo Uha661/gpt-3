@@ -65,18 +65,18 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
         # chnage the name of the check point file if required 
         ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
         saver.restore(sess, ckpt)
-        print(str((time.time() - start_time)*1000)+" time to intialise model")
+        print(round((time.time() - start_time)*1000, 2)+' time to intialise model in milli Sec')
 
 
         for raw_text in inputs_words:
             start_time = time.time()
             context_tokens = enc.encode(raw_text)
             out = sess.run(output, feed_dict={context: [context_tokens for _ in range(batch_size)]})
-            print((time.time() - start_time)*1000)
+            print(round((time.time() - start_time)*1000, 2)+'milli Sec')
 
             for word in out[0]:
             	wordarray = [ word ]
-            	print( raw_text+' ' + enc.decode(wordarray)+'\n' )
+            	print( raw_text+' ' + enc.decode(wordarray) )
             print("=" * 80 )
     
     return print('done with predictions')
