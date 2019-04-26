@@ -59,6 +59,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
 
             logits = top_k_logits(logits, k=1)
             samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
+            print(tf.concat([output, samples], axis=1))
 
             return [
                 tf.concat([past, next_outputs['presents']], axis=-2),
