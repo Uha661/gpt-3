@@ -71,7 +71,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
         for raw_text in inputs_words:
             context_tokens = enc.encode(raw_text)
             out = sess.run(output, feed_dict={context: [context_tokens for _ in range(batch_size)]})
-            for each_prediction_value in out:
+            for each_prediction_value in out[0,:]:
 
             	each_prediction_word = enc.decode(each_prediction_value)
             	print(raw_text+' '+each_prediction_word+'\n')
