@@ -70,20 +70,12 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
 
         for raw_text in inputs_words:
             context_tokens = enc.encode(raw_text)
-            generated = 0
-            for _ in range(nsamples // batch_size):
-                out = sess.run(output, feed_dict={context: [context_tokens for _ in range(batch_size)]})[:,:]
-                print(out)
+            out = sess.run(output, feed_dict={context: [context_tokens for _ in range(batch_size)]})[:,:]
+            for each_prediction_value in out:
 
-                for i in range(batch_size):
-                    # since batch_size is one generated = text; but lets see how it works 
-                    generated += 1
-
-                    text = enc.decode(out[i])
-
-                    for each_prediction in text.split():
-                    	print(raw_text+' '+each_prediction+'\n')
-                    print("=" * 80 )
+            	each_prediction_word = enc.decode(each_prediction_value)
+            	print(raw_text+' '+each_prediction+'\n')
+                print("=" * 80 )
                 #print((time.time() - start_time))
 
     return print('done with predictions')
