@@ -71,7 +71,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
         for raw_text in inputs_words:
             start_time = time.time()
             context_tokens = enc.encode(raw_text)
-            out = sess.run(output, feed_dict={context: [context_tokens for _ in range(batch_size)]})
+            out = sess.run(output, feed_dict={context: [context_tokens]})
             print(str(round((time.time() - start_time)*1000, 1))+'  milli Sec')
 
             for word in out[0]:
