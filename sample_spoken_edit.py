@@ -46,7 +46,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
         # TODO: Would be slightly faster if we called step on the entire context,
         # rather than leaving the last token transformer calculation to the while loop.
         context_output = step(hparams, context[:, :-1])
-        top_10=tf.zeros(shape=[1,10],dtype=tf.dtypes.int64,name=None)
+        top_10=tf.zeros(shape=[1,10],dtype=tf.dtypes.int32,name=None)
 
         def body(past, prev, output,top_10):
             next_outputs = step(hparams, prev[:, tf.newaxis], past=past)
@@ -58,7 +58,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
 
             samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
             
-            print(top_10)
+            print(tf.concat([output, samples], axis=1))
             return [
                 tf.concat([past, next_outputs['presents']], axis=-2),
                 tf.squeeze(samples, axis=[1]),
@@ -86,5 +86,5 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             ],
             back_prop=False,
         )
-        print(tokens)
+        
         return tokens
