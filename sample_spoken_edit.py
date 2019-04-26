@@ -46,7 +46,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
         # TODO: Would be slightly faster if we called step on the entire context,
         # rather than leaving the last token transformer calculation to the while loop.
         context_output = step(hparams, context[:, :-1])
-        print(context_output)
+        
 
         def body(past, prev, output):
             next_outputs = step(hparams, prev[:, tf.newaxis], past=past)
@@ -58,19 +58,20 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
             _,top_10=tf.nn.top_k(logits,k=10,sorted=True,name='probablities')
             
 
-            samples = tf.multinomial(top_10, num_samples=10, output_dtype=tf.int32)
+            samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
             
             
             return [
                 tf.concat([past, next_outputs['presents']], axis=-2),
                 tf.squeeze(samples, axis=[1]),
                 tf.concat([output, samples], axis=1),
+                top_10,
             ]
 
         def cond(*args):
             return True
 
-        _, _, tokens = tf.while_loop(
+        _, _,_, tokens = tf.while_loop(
             cond=cond, body=body,
             maximum_iterations=length,
             loop_vars=[
@@ -82,6 +83,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
                 tf.TensorShape(model.past_shape(hparams=hparams, batch_size=batch_size)),
                 tf.TensorShape([batch_size]),
                 tf.TensorShape([batch_size, None]),
+                tf.TensorShape([1,10])
             ],
             back_prop=False,
         )
