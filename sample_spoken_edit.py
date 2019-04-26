@@ -68,7 +68,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         def cond(*args):
             return True
 
-        _,tokens = tf.while_loop(
+        _, _,_,tokens = tf.while_loop(
             cond=cond, body=body,
             maximum_iterations=length,
             loop_vars=[
