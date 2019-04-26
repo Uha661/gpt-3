@@ -17,7 +17,7 @@ import tensorflow as tf
 import json
 import model, sample_spoken_edit, encoder
 
-def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1, batch_size=1, length=1, temperature=1, top_k=10, ):
+def interact_model(input_test_file=None, model_name='117M', length=1, temperature=1, top_k=10 ):
     """
     Interactively run the model
     :model_name=117M : String, which model to use
@@ -56,7 +56,6 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
         output = sample_spoken_edit.sample_sequence(
             hparams=hparams, length=length,
             context=context,
-            batch_size=batch_size,
             temperature=temperature, top_k=top_k
         )
         
@@ -72,19 +71,21 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
             start_time = time.time()
             context_tokens = enc.encode(raw_text)
             out = sess.run(output, feed_dict={context: [context_tokens]})
-            print(str(round((time.time() - start_time)*1000, 1))+'  milli Sec')
+
+            print(str(round((time.time() - start_time)*1000, 1))+'ms')
 
             for word in out[0]:
             	wordarray = [ word ]
             	print( raw_text+' ' + enc.decode(wordarray) )
-            print("=" * 80 )
+            print("")
     
     return print('done with predictions')
     
 
 
 
-interact_model(input_test_file='gpt-3_test_input.json', model_name='117M',seed=None,nsamples=1,batch_size=1,length=1,temperature=1,top_k=10)
+#interact_model(input_test_file='gpt-3_test_input.json', model_name='117M',seed=None,nsamples=1,batch_size=1,length=1,temperature=1,top_k=10)
+interact_model(input_test_file='gpt-3_test_input.json')
 
 
 # my intial plan is to run the model with in the for loop of inputs from json file, but if we do that each time we have to load the model and do single prediction
