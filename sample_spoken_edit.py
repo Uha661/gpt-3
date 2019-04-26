@@ -73,8 +73,8 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
             maximum_iterations=length,
             loop_vars=[
                 context_output['presents'],
-                context[:, -1],
-                context,
+                #context[:, -1],
+                #context,
                 top_10,
             ],
             shape_invariants=[
