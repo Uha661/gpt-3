@@ -60,6 +60,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
             temperature=temperature, top_k=top_k
         )
         print(output)
+        tf.print(output)
         saver = tf.train.Saver()
         # chnage the name of the check point file if required 
         ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
