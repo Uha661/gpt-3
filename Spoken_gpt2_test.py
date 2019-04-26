@@ -74,7 +74,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
             for each_prediction_value in out:
 
             	each_prediction_word = enc.decode(each_prediction_value)
-            	print(raw_text+' '+each_prediction+'\n')
+            	print(raw_text+' '+each_prediction_word+'\n')
             	print("=" * 80 )
                 #print((time.time() - start_time))
 
