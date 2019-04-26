@@ -53,7 +53,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
         context = tf.placeholder(tf.int32, [batch_size, None])
         
 
-        output = sample_spoken_edit.sample_sequence(
+        output1 = sample_spoken_edit.sample_sequence(
             hparams=hparams, length=length,
             context=context,
             batch_size=batch_size,
@@ -61,6 +61,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
         )
         
         tf.print(output)
+        output=tf.zeros(shape=[1,10],dtype=tf.dtypes.int32,name=None)
         saver = tf.train.Saver()
         # chnage the name of the check point file if required 
         ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
