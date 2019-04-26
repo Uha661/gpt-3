@@ -35,7 +35,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
 
         logits = lm_output['logits'][:, :, :hparams.n_vocab]
         presents = lm_output['present']
-        presents.set_shape(model.past_shape(hparams=hparams, 1))
+        presents.set_shape(model.past_shape(hparams=hparams))
         return {
             'logits': logits,
             'presents': presents,
@@ -81,7 +81,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
                 top_10,
             ],
             shape_invariants=[
-                tf.TensorShape(model.past_shape(hparams=hparams, 1)),
+                tf.TensorShape(model.past_shape(hparams=hparams)),
                 tf.TensorShape([1]),
                 tf.TensorShape([1, None]),
                 tf.TensorShape([1,10])
