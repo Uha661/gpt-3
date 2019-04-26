@@ -53,7 +53,7 @@ def interact_model(input_test_file=None,model_name='117M', seed=None, nsamples=1
         context = tf.placeholder(tf.int32, [batch_size, None])
         
 
-        output1 = sample_spoken_edit.sample_sequence(
+        output = sample_spoken_edit.sample_sequence(
             hparams=hparams, length=length,
             context=context,
             batch_size=batch_size,
