@@ -81,7 +81,7 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
             for word in out[0][0]:
             	i+=1
             	print(i)
-            	print(out[1][i])
+            	print(out[1][0][i])
 
             	wordarray = [ word ]
             	print()
