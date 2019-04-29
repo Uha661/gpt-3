@@ -59,7 +59,7 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
             temperature=temperature, top_k=top_k
         )
         
-        tf.print(output)
+        
         saver = tf.train.Saver()
         
         # Please make sure that we are passing the checkpoints of trained model 
@@ -71,8 +71,8 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
         for raw_text in inputs_words:
             start_time = time.time()
             context_tokens = enc.encode(raw_text)
-            out,out1 = sess.run(output_values,output_probalities, feed_dict={context: [context_tokens]})
-            print(out1)
+            out = sess.run(output, feed_dict={context: [context_tokens]})
+            print(out)
 
             print(str(round((time.time() - start_time)*1000, 1))+'ms')
 
