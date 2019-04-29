@@ -72,8 +72,7 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
             start_time = time.time()
             context_tokens = enc.encode(raw_text)
             out = sess.run(output, feed_dict={context: [context_tokens]})
-            print(out[0])
-            print(out[1])
+
 
             print(str(round((time.time() - start_time)*1000, 1))+'ms')
             i=0
