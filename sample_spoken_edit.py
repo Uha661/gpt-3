@@ -45,13 +45,15 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
 
         context_output = step(hparams, context[:, :-1])
         top_10=tf.zeros(shape=[1,10],dtype=tf.dtypes.int32,name=None)
+        top_10_probablities=tf.zeros(shape=[1,10],dtype=tf.dtypes.float32,name=None)
+
 
         def body(past, prev, output,top_10):
             next_outputs = step(hparams, prev[:, tf.newaxis], past=past)
             logits = next_outputs['logits'][:, -1, :]  / tf.to_float(temperature)
            
 
-            _,top_10=tf.nn.top_k(logits,k=top_k,sorted=True,name='probablities')
+            top_10_probablities,top_10=tf.nn.top_k(logits,k=top_k,sorted=True,name='probablities')
             
 
             logits = top_k_logits(logits, k=top_k)
@@ -63,12 +65,13 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
                 tf.squeeze(samples, axis=[1]),
                 tf.concat([output, samples], axis=1),
                 top_10,
+                top_10_probablities,
             ]
 
         def cond(*args):
             return True
 
-        _, _,_,tokens = tf.while_loop(
+        _, _,_,tokens,token_probablities = tf.while_loop(
             cond=cond, body=body,
             maximum_iterations=length,
             loop_vars=[
@@ -76,12 +79,15 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
                 context[:, -1],
                 context,
                 top_10,
+                top_10_probablities,
             ],
             shape_invariants=[
                 tf.TensorShape(model.past_shape(hparams=hparams)),
                 tf.TensorShape([1]),
                 tf.TensorShape([1, None]),
+                tf.TensorShape([1,10]),
                 tf.TensorShape([1,10])
+
             ],
             back_prop=False,
         )
