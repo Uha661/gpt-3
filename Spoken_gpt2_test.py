@@ -79,13 +79,10 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
             i=0
 
             for word in out[0][0]:
-            	i+=1
-            	print(i)
-            	print(out[1][0][i])
-
             	wordarray = [ word ]
-            	print()
+            	print(out[1][0][i])
             	print( raw_text+' ' + enc.decode(wordarray) )
+            	i+=1
             print("")
     
     return print('done with predictions')
