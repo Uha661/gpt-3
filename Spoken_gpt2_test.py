@@ -76,9 +76,15 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
             print(out[1])
 
             print(str(round((time.time() - start_time)*1000, 1))+'ms')
+            i=0
 
-            for word in out[0]:
+            for word in out[0][0]:
+            	i+=1
+            	print(i)
+            	print(out[1][i])
+
             	wordarray = [ word ]
+            	print()
             	print( raw_text+' ' + enc.decode(wordarray) )
             print("")
     
