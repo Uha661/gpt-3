@@ -86,7 +86,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
                 tf.TensorShape([1]),
                 tf.TensorShape([1, None]),
                 tf.TensorShape([1,10]),
-                tf.TensorShape([1,10])
+                tf.TensorShape([1,10]),
 
             ],
             back_prop=False,
