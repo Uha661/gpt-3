@@ -48,7 +48,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         top_10_probablities=tf.zeros(shape=[1,10],dtype=tf.dtypes.float32,name=None)
 
 
-        def body(past, prev, output,top_10):
+        def body(past, prev, output,top_10,top_10_probablities):
             next_outputs = step(hparams, prev[:, tf.newaxis], past=past)
             logits = next_outputs['logits'][:, -1, :]  / tf.to_float(temperature)
            
