@@ -92,4 +92,4 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
             back_prop=False,
         )
         
-        return tokens
+        return tokens,token_probablities
