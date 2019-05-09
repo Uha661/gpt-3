@@ -82,7 +82,7 @@ def main():
             opt_apply = opt.apply_gradients()
             summary_loss = tf.summary.scalar('loss', opt_apply)
         else:
-            opt_apply = adam_optimizer.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss, var_list=train_vars )
+            opt_apply = adam_optimizer.AdamOptimizer( learning_rate=args.learning_rate) #.minimize( loss, var_list=train_vars )
             summary_loss = tf.summary.scalar('loss', loss)
 
         
