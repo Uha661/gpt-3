@@ -87,6 +87,7 @@ def main():
 
         # init=tf.global_variables_initializer()
         print( tf.local_variables_initializer() )
+        #tf.variables_initializer(var_list=tf.global_variables(scope='network'))
         #init =tf.variables_initializer(var_list=tf.global_variables())
 
 
@@ -99,7 +100,7 @@ def main():
             var_list=train_vars,
             max_to_keep=5,
             keep_checkpoint_every_n_hours=2)
-        init_op = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
+        init_op = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer(scope='network'))
         
 
         sess.run(init_op)
