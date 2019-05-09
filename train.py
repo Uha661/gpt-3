@@ -78,7 +78,7 @@ def main():
 
         init=tf.global_variables_initializer()
         opt_apply = adam_optimizer.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss, var_list=train_vars )
-        
+        sess.run(init)
         
         summary_loss = tf.summary.scalar('loss', loss)
 
@@ -89,7 +89,7 @@ def main():
             var_list=train_vars,
             max_to_keep=5,
             keep_checkpoint_every_n_hours=2)
-        sess.run(init)
+        
 
         #sess.run(tf.global_variables_initializer())
         
