@@ -81,8 +81,16 @@ def main():
             opt_apply = opt.apply_gradients()
             summary_loss = tf.summary.scalar('loss', opt_apply)
         else:
-            opt_apply = tf.train.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss )   #, var_list=train_vars
-            summary_loss = tf.summary.scalar('loss', loss)
+            with tf.variable_scope('network'):
+                opt_apply = tf.train.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss )   #, var_list=train_vars
+                summary_loss = tf.summary.scalar('loss', loss)
+
+        init=tf.global_variables_initializer()
+        print( tf.global_variables(scope='network') )
+        tf.variables_initializer(var_list=tf.global_variables(scope='network'))
+
+
+
 
 
         summary_log = tf.summary.FileWriter(os.path.join(CHECKPOINT_DIR, args.run_name))
@@ -93,7 +101,7 @@ def main():
             keep_checkpoint_every_n_hours=2)
         
 
-        sess.run(tf.global_variables_initializer())
+        sess.run(init)
         
 
         if args.restore_from == 'latest':
