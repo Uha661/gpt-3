@@ -93,7 +93,7 @@ def main():
             var_list=train_vars,
             max_to_keep=5,
             keep_checkpoint_every_n_hours=2)
-        #sess.run(tf.global_variables_initializer())
+        sess.run(tf.global_variables_initializer())
 
         if args.restore_from == 'latest':
             ckpt = tf.train.latest_checkpoint(
