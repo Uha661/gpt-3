@@ -28,8 +28,9 @@ def tensor_list(graph_location):
 def add_tags(graph_location,save_location):
 
     with tf.Session(graph=tf.get_default_graph()) as sess:
-        saver = tf.train.import_meta_graph(graph_location+'.meta')
         sess.run(tf.initialize_all_variables())
+        saver = tf.train.import_meta_graph(graph_location+'.meta')
+
         saver.restore(sess, graph_location)
 
 
