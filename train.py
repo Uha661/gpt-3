@@ -86,8 +86,8 @@ def main():
                 summary_loss = tf.summary.scalar('loss', loss)
 
         # init=tf.global_variables_initializer()
-        print( tf.global_variables() )
-        init =tf.variables_initializer(var_list=tf.global_variables())
+        print( tf.local_variables_initializer() )
+        #init =tf.variables_initializer(var_list=tf.global_variables())
 
 
 
@@ -101,7 +101,7 @@ def main():
             keep_checkpoint_every_n_hours=2)
         
 
-        sess.run(init)
+        sess.run(init_op = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer()))
         
 
         if args.restore_from == 'latest':
