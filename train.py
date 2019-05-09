@@ -85,9 +85,9 @@ def main():
                 opt_apply = tf.train.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss )   #, var_list=train_vars
                 summary_loss = tf.summary.scalar('loss', loss)
 
-        init=tf.global_variables_initializer()
-        print( tf.global_variables(scope='network') )
-        tf.variables_initializer(var_list=tf.global_variables(scope='network'))
+        # init=tf.global_variables_initializer()
+        print( tf.global_variables() )
+        init =tf.variables_initializer(var_list=tf.global_variables())
 
 
 
