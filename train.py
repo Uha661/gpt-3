@@ -8,7 +8,7 @@ import os
 import numpy as np
 import tensorflow as tf
 import time
-
+import adam_optimizer
 import model, sample, encoder
 from load_dataset import load_dataset, Sampler
 from accumulate import AccumulatingOptimizer
@@ -75,14 +75,14 @@ def main():
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
         if args.accumulate_gradients > 1:
             opt = AccumulatingOptimizer(
-                opt=tf.train.AdamOptimizer(learning_rate=args.learning_rate),
+                opt=adam_optimizer.AdamOptimizer(learning_rate=args.learning_rate),
                 var_list=train_vars)
             opt_reset = opt.reset()
             opt_compute = opt.compute_gradients(loss)
             opt_apply = opt.apply_gradients()
             summary_loss = tf.summary.scalar('loss', opt_apply)
         else:
-            opt_apply = tf.train.AdamOptimizer(
+            opt_apply = adam_optimizer.AdamOptimizer(
                 learning_rate=args.learning_rate).minimize(
                     loss, var_list=train_vars)
             summary_loss = tf.summary.scalar('loss', loss)
