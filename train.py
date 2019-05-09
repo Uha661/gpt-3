@@ -75,13 +75,13 @@ def main():
         
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
         if args.accumulate_gradients > 1:
-            opt = AccumulatingOptimizer( opt=adam_optimizer.AdamOptimizer(learning_rate=args.learning_rate), var_list=train_vars )
+            opt = AccumulatingOptimizer( opt=tf.train.AdamOptimizer(learning_rate=args.learning_rate), var_list=train_vars )
             opt_reset = opt.reset()
             opt_compute = opt.compute_gradients(loss)
             opt_apply = opt.apply_gradients()
             summary_loss = tf.summary.scalar('loss', opt_apply)
         else:
-            opt_apply = adam_optimizer.AdamOptimizer( learning_rate=args.learning_rate) #.minimize( loss, var_list=train_vars )
+            opt_apply = tf.train.AdamOptimizer( learning_rate=args.learning_rate) #.minimize( loss, var_list=train_vars )
             summary_loss = tf.summary.scalar('loss', loss)
 
         
