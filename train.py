@@ -76,8 +76,9 @@ def main():
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
         
 
+        
+        opt_apply = tf.train.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss, var_list=train_vars )
         init=tf.global_variables_initializer()
-        opt_apply = adam_optimizer.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss, var_list=train_vars )
         sess.run(init)
         
         summary_loss = tf.summary.scalar('loss', loss)
