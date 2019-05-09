@@ -71,9 +71,8 @@ def main():
             batch_size=args.batch_size,
             temperature=1.0,
             top_k=40)
-        tf.global_variables_initializer().run()
-        tf.tables_initializer().run()
 
+        sess.run(tf.global_variables_initializer())
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
         if args.accumulate_gradients > 1:
             opt = AccumulatingOptimizer( opt=adam_optimizer.AdamOptimizer(learning_rate=args.learning_rate), var_list=train_vars )
@@ -92,7 +91,9 @@ def main():
             var_list=train_vars,
             max_to_keep=5,
             keep_checkpoint_every_n_hours=2)
+
         sess.run(tf.global_variables_initializer())
+        
 
         if args.restore_from == 'latest':
             ckpt = tf.train.latest_checkpoint(
