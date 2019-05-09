@@ -82,14 +82,11 @@ def main():
             opt_apply = opt.apply_gradients()
             summary_loss = tf.summary.scalar('loss', opt_apply)
         else:
-            opt_apply = tf.train.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss, var_list=train_vars )
+            opt_apply = tf.train.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss )   #, var_list=train_vars
             summary_loss = tf.summary.scalar('loss', loss)
 
-        
-        summary_loss = tf.summary.scalar('loss', loss)
 
-        summary_log = tf.summary.FileWriter(
-            os.path.join(CHECKPOINT_DIR, args.run_name))
+        summary_log = tf.summary.FileWriter(os.path.join(CHECKPOINT_DIR, args.run_name))
 
         saver = tf.train.Saver(
             var_list=train_vars,
