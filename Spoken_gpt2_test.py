@@ -63,8 +63,10 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
         saver = tf.train.Saver()
         
         # Please make sure that we are passing the checkpoints of trained model 
-        ckpt = tf.train.latest_checkpoint(os.path.join('models', model_name))
-        #ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
+        
+        #ckpt = tf.train.latest_checkpoint(os.path.join('models', model_name)) 
+        # the above line can be un commented if we want to test with original model 
+        ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
         saver.restore(sess, ckpt)
         print(str(round((time.time() - start_time)*1000, 1))+' time to intialise model in milli Sec')
 
