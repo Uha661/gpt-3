@@ -71,20 +71,17 @@ def main():
             batch_size=args.batch_size,
             temperature=1.0,
             top_k=40)
+        sess.run(tf.global_variables_initializer())
 
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
         if args.accumulate_gradients > 1:
-            opt = AccumulatingOptimizer(
-                opt=adam_optimizer.AdamOptimizer(learning_rate=args.learning_rate),
-                var_list=train_vars)
+            opt = AccumulatingOptimizer( opt=adam_optimizer.AdamOptimizer(learning_rate=args.learning_rate), var_list=train_vars )
             opt_reset = opt.reset()
             opt_compute = opt.compute_gradients(loss)
             opt_apply = opt.apply_gradients()
             summary_loss = tf.summary.scalar('loss', opt_apply)
         else:
-            opt_apply = adam_optimizer.AdamOptimizer(
-                learning_rate=args.learning_rate).minimize(
-                    loss, var_list=train_vars)
+            opt_apply = adam_optimizer.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss, var_list=train_vars )
             summary_loss = tf.summary.scalar('loss', loss)
 
         summary_log = tf.summary.FileWriter(
@@ -94,7 +91,7 @@ def main():
             var_list=train_vars,
             max_to_keep=5,
             keep_checkpoint_every_n_hours=2)
-        sess.run(tf.global_variables_initializer())
+        
 
         if args.restore_from == 'latest':
             ckpt = tf.train.latest_checkpoint(
