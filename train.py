@@ -59,7 +59,9 @@ def main():
     config.gpu_options.allow_growth = True
     with tf.Session(config=config) as sess:
         context = tf.placeholder(tf.int32, [args.batch_size, None])
+        print(context)
         output = model.model(hparams=hparams, X=context)
+        print(output['logits'])
         loss = tf.reduce_mean(
             tf.nn.sparse_softmax_cross_entropy_with_logits(
                 labels=context[:, 1:], logits=output['logits'][:, :-1]))
