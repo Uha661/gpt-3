@@ -67,15 +67,8 @@ def main():
         print(context)
         tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=length,context=context,temperature=1.0, top_k=top_k)
         print(tf_sample)
-'''
-        tf_sample = sample.sample_sequence(
-            hparams=hparams,
-            length=args.sample_length,
-            context=context,
-            batch_size=args.batch_size,
-            temperature=1.0,
-            top_k=40)
-'''
+        # please check at the bottom to get the original
+
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
         if args.accumulate_gradients > 1:
             opt = AccumulatingOptimizer( opt=tf.train.AdamOptimizer(learning_rate=args.learning_rate), var_list=train_vars )
@@ -207,3 +200,21 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+
+
+
+
+
+
+'''
+        tf_sample = sample.sample_sequence(
+            hparams=hparams,
+            length=args.sample_length,
+            context=context,
+            batch_size=args.batch_size,
+            temperature=1.0,
+            top_k=40)
+'''
