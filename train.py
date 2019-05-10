@@ -84,25 +84,15 @@ def main():
             summary_loss = tf.summary.scalar('loss', opt_apply)
         else:
             with tf.variable_scope('network'):
-                opt_apply = tf.train.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss )   #, var_list=train_vars
+                opt_apply = tf.train.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss, var_list=train_vars )
                 summary_loss = tf.summary.scalar('loss', loss)
-
-        # init=tf.global_variables_initializer()
-        #print( tf.local_variables_initializer() )
-        #tf.variables_initializer(var_list=tf.global_variables(scope='network'))
-        #init =tf.variables_initializer(var_list=tf.global_variables())
-
-
-
 
 
         summary_log = tf.summary.FileWriter(os.path.join(CHECKPOINT_DIR, args.run_name))
-
         saver = tf.train.Saver(
             var_list=train_vars,
             max_to_keep=5,
             keep_checkpoint_every_n_hours=2)
-        #init_op = tf.group(, tf.local_variables_initializer())
         
 
         sess.run(tf.global_variables_initializer())
