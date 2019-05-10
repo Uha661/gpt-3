@@ -37,8 +37,8 @@ def add_tags(graph_location,save_location):
         
         builder = tf.saved_model.Builder(save_location)
   
-        input_tensor   = tf.get_default_graph().get_tensor_by_name("model/h0/attn/c_attn/Shape:0")
-        output_tensor  = tf.get_default_graph().get_tensor_by_name("model/h0/attn/c_attn/Shape:0")
+        input_tensor   = tf.get_default_graph().get_tensor_by_name("Placeholder:0")
+        output_tensor  = tf.get_default_graph().get_tensor_by_name("model/Reshape_1:0")
   
 
         tensor_info_x = tf.saved_model.utils.build_tensor_info(input_tensor)
