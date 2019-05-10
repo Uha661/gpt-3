@@ -8,8 +8,7 @@ import os
 import numpy as np
 import tensorflow as tf
 import time
-import adam_optimizer
-import model, sample, encoder
+import model, sample, encoder, sample_spoken_edit
 from load_dataset import load_dataset, Sampler
 from accumulate import AccumulatingOptimizer
 
@@ -60,13 +59,20 @@ def main():
     #  with tf.Session(config=config) as sess:
     with tf.Session() as sess:
         context = tf.placeholder(tf.int32, [args.batch_size, None])
-        print(context)
+        
         output = model.model(hparams=hparams, X=context)
-        print(output['logits'])
+        
         loss = tf.reduce_mean(
             tf.nn.sparse_softmax_cross_entropy_with_logits(
                 labels=context[:, 1:], logits=output['logits'][:, :-1]))
 
+        print(context)
+        tf_sample = sample_spoken_edit.sample_sequence(
+            hparams=hparams, length=length,
+            context=context,
+            temperature=temperature, top_k=top_k)
+        print(tf_sample)
+        '''
         tf_sample = sample.sample_sequence(
             hparams=hparams,
             length=args.sample_length,
@@ -74,7 +80,7 @@ def main():
             batch_size=args.batch_size,
             temperature=1.0,
             top_k=40)
-
+        '''
         
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
         if args.accumulate_gradients > 1:
@@ -173,7 +179,7 @@ def main():
                 if counter % args.save_every == 0:
                     save()
                 if counter % args.sample_every == 0:
-                    generate_samples()
+                   # generate_samples()
 
                 if args.accumulate_gradients > 1:
                     sess.run(opt_reset)
