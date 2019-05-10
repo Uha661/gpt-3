@@ -165,7 +165,7 @@ def main():
             while True:
                 if counter % args.save_every == 0:
                     save()
-                if counter % args.sample_every == 0:
+                # if counter % args.sample_every == 0:
                    # generate_samples()
 
                 if args.accumulate_gradients > 1:
