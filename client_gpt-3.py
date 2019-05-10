@@ -59,12 +59,12 @@ def do_inference(hostport,input_string):
 
 
 ## Command line arguments 
-## pyhton client.py "input_mode" "num_steps"
-## python client.py server 6
+## pyhton client.py "input_mode" 
+## python client.py server 
 
 arg=sys.argv
 input_mode=arg[1]
-num_steps=arg[2]
+
 
 if input_mode=='server':
   ip='192.168.2.210:8500'
