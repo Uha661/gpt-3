@@ -16,7 +16,7 @@ _counter = 0
 _start = 0
 
 
-enc = encoder.get_encoder(model_name)
+enc = encoder.get_encoder('117M')
 
 
 def do_inference(hostport,input_string):
