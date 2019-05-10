@@ -89,7 +89,7 @@ def main():
                 summary_loss = tf.summary.scalar('loss', loss)
 
         # init=tf.global_variables_initializer()
-        #print( tf.local_variables_initializer() )
+        print( tf.local_variables_initializer() )
         #tf.variables_initializer(var_list=tf.global_variables(scope='network'))
         #init =tf.variables_initializer(var_list=tf.global_variables())
 
