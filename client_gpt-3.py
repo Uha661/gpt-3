@@ -56,7 +56,6 @@ def do_inference(hostport,input_string):
  
   return result
  
-id_word = {v: k for k, v in lookup.items()}
 
 
 ## Command line arguments 
