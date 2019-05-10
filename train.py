@@ -66,7 +66,7 @@ def main():
                 labels=context[:, 1:], logits=output['logits'][:, :-1]))
         print(context)
         tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=length,context=context,temperature=1.0, top_k=top_k)
-        print(tf_sample)
+        #print(tf_sample)
         '''
         tf_sample = sample.sample_sequence(
             hparams=hparams,
