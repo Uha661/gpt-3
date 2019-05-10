@@ -37,7 +37,7 @@ def do_inference(hostport,input_string):
   request.model_spec.signature_name = 'serving_default'
   #data
 
-  ids=enc.encode(input_string)
+  ids=str(enc.encode(input_string))
 
  
 
