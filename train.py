@@ -78,7 +78,6 @@ def main():
             top_k=40)
         '''
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
-        
         if args.accumulate_gradients > 1:
             opt = AccumulatingOptimizer( opt=tf.train.AdamOptimizer(learning_rate=args.learning_rate), var_list=train_vars )
             opt_reset = opt.reset()
