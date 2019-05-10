@@ -37,13 +37,13 @@ def do_inference(hostport,input_string):
   request.model_spec.signature_name = 'serving_default'
   #data
 
-  ids=str(enc.encode(input_string))
+  ids=enc.encode(input_string)
 
  
 
 # reshaping the input tensors as defined in signature defnition
 
-  tensor = tf.contrib.util.make_tensor_proto(ids, dtype=tf.int32,shape=(1,None))
+  tensor = tf.contrib.util.make_tensor_proto(ids, dtype=tf.int32,shape=(1,1))
   
 
 
