@@ -18,7 +18,7 @@ def tensor_list(graph_location):
         saver.restore(sess, graph_location)
 
         for op in tf.get_default_graph().get_operations():
-           print(str(op.values()), file=open("Tensorlist.txt", "a"))
+           print(str(op.values()), file=open("Tensorlist.txt", "w"))
 
 
     return('done with tensor_list please check it')
