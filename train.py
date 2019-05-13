@@ -196,8 +196,6 @@ def main():
 
                 counter += 1
         except KeyboardInterrupt:
-            with tf.Session() as sess:
-                    #context = tf.placeholder(tf.int32, [args.batch_size, None])
             print('interrupted')
             save()
 
