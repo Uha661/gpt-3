@@ -92,7 +92,7 @@ for input_words in inputs:
 
   count=0
 
-  print(len(result.outputs["y_output"]))
+  print(result.outputs["y_output"])
   print("'")
   print("'")
   print("'")
