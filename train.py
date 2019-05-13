@@ -63,9 +63,10 @@ def main():
         output = model.model(hparams=hparams, X=context)
         
         loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=context[:, 1:], logits=output['logits'][:, :-1]))
-        print(context)
-        tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=1,context=context,temperature=1.0, top_k=10)
-        print(tf_sample)
+        with tf.name_scope("Serve_tensors"):
+            print(context)
+            tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=1,context=context,temperature=1.0, top_k=10)
+            print(tf_sample)
         # please check at the bottom to get the original
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
         if args.accumulate_gradients > 1:
@@ -162,7 +163,7 @@ def main():
         try:
             while True:
                 if counter % args.save_every == 0:
-                    save()
+                    print("we used to generate samples here")
                 # if counter % args.sample_every == 0:
                    # generate_samples()
 
