@@ -44,6 +44,8 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         # rather than leaving the last token transformer calculation to the while loop.
 
         context_output = step(hparams, context[:, :-1])
+        print(context)
+        print(context_output['presents'])
         top_10=tf.zeros(shape=[1,10],dtype=tf.dtypes.int32,name=None)
         top_10_probablities=tf.zeros(shape=[1,10],dtype=tf.dtypes.float32,name=None)
 
