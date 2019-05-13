@@ -61,17 +61,14 @@ def main():
         
         output = model.model(hparams=hparams, X=context)
         
-        loss = tf.reduce_mean(
-            tf.nn.sparse_softmax_cross_entropy_with_logits(
-                labels=context[:, 1:], logits=output['logits'][:, :-1]))
+        loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(abels=context[:, 1:], logits=output['logits'][:, :-1]))
         print(context)
         tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=length,context=context,temperature=1.0, top_k=top_k)
         print(tf_sample)
         # please check at the bottom to get the original
-
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
         if args.accumulate_gradients > 1:
-            opt = AccumulatingOptimizer( opt=tf.train.AdamOptimizer(learning_rate=args.learning_rate), var_list=train_vars )
+            opt = AccumulatingOptimizer(opt=tf.train.AdamOptimizer(learning_rate=args.learning_rate), var_list=train_vars)
             opt_reset = opt.reset()
             opt_compute = opt.compute_gradients(loss)
             opt_apply = opt.apply_gradients()
