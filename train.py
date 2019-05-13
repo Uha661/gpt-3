@@ -201,9 +201,7 @@ def main():
                         print(context)
                         tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=1,context=context,temperature=1.0, top_k=10)
                         print(tf_sample)
-                    sess.run(tf.global_variables_initializer())
-
-
+                        sess.run(tf.global_variables_initializer())
             print('interrupted')
             save()
 
