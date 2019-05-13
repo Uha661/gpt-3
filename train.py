@@ -63,13 +63,13 @@ def main():
         output = model.model(hparams=hparams, X=context)
         
         loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=context[:, 1:], logits=output['logits'][:, :-1]))
-        '''
+        """
         with tf.name_scope("Serve_tensors"):
             print(context)
             tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=1,context=context,temperature=1.0, top_k=10)
             print(tf_sample)
+        """
         # please check at the bottom to get the original
-        '''
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
         if args.accumulate_gradients > 1:
             opt = AccumulatingOptimizer(opt=tf.train.AdamOptimizer(learning_rate=args.learning_rate), var_list=train_vars)
@@ -195,13 +195,14 @@ def main():
 
                 counter += 1
         except KeyboardInterrupt:
-                with tf.Session() as sess:
-                    #context = tf.placeholder(tf.int32, [args.batch_size, None])
-                    with tf.name_scope("Serve_tensors"):
-                        print(context)
-                        tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=1,context=context,temperature=1.0, top_k=10)
-                        print(tf_sample)
-                        sess.run(tf.global_variables_initializer())
+            with tf.Session() as sess:
+                #context = tf.placeholder(tf.int32, [args.batch_size, None])
+                with tf.name_scope("Serve_tensors"):
+                    print(context)
+                    tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=1,context=context,temperature=1.0, top_k=10)
+                    print(tf_sample)
+                    sess.run(tf.global_variables_initializer())
+
             print('interrupted')
             save()
 
