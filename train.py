@@ -163,10 +163,11 @@ def main():
 
         try:
             while True:
-                if counter % args.save_every == 0:
-                    context_tokens = data_sampler.sample(1)
-                    out = sess.run(tf_sample,feed_dict={context: args.batch_size * [context_tokens]})
-                    print("we used to generate samples here")
+                if counter % 100 == 0:
+                    with tf.name_scope("Serve_tensors_output"):
+                        context_tokens = data_sampler.sample(1)
+                        out = sess.run(tf_sample,feed_dict={context: args.batch_size * [context_tokens]})
+                        print("we used to generate samples here")
                 # if counter % args.sample_every == 0:
                    # generate_samples()
 
