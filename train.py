@@ -63,7 +63,7 @@ def main():
         
         loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(abels=context[:, 1:], logits=output['logits'][:, :-1]))
         print(context)
-        tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=length,context=context,temperature=1.0, top_k=top_k)
+        tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=1,context=context,temperature=1.0, top_k=top_k)
         print(tf_sample)
         # please check at the bottom to get the original
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
