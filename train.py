@@ -63,12 +63,10 @@ def main():
         output = model.model(hparams=hparams, X=context)
         
         loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=context[:, 1:], logits=output['logits'][:, :-1]))
-        """
         with tf.name_scope("Serve_tensors"):
             print(context)
             tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=1,context=context,temperature=1.0, top_k=10)
             print(tf_sample)
-        """
         # please check at the bottom to get the original
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
         if args.accumulate_gradients > 1:
@@ -143,6 +141,7 @@ def main():
                 out = sess.run(
                     tf_sample,
                     feed_dict={context: args.batch_size * [context_tokens]})
+            
                 for i in range(min(args.sample_num - index, args.batch_size)):
                     text = enc.decode(out[i])
                     text = '======== SAMPLE {} ========\n{}\n'.format(
@@ -165,6 +164,8 @@ def main():
         try:
             while True:
                 if counter % args.save_every == 0:
+                    context_tokens = data_sampler.sample(1)
+                    out = sess.run(tf_sample,feed_dict={context: args.batch_size * [context_tokens]})
                     print("we used to generate samples here")
                 # if counter % args.sample_every == 0:
                    # generate_samples()
@@ -196,13 +197,7 @@ def main():
                 counter += 1
         except KeyboardInterrupt:
             with tf.Session() as sess:
-                #context = tf.placeholder(tf.int32, [args.batch_size, None])
-                with tf.name_scope("Serve_tensors"):
-                    print(context)
-                    tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=1,context=context,temperature=1.0, top_k=10)
-                    print(tf_sample)
-                    sess.run(tf.global_variables_initializer())
-
+                    #context = tf.placeholder(tf.int32, [args.batch_size, None])
             print('interrupted')
             save()
 
