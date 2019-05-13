@@ -147,7 +147,9 @@ def positions_for(tokens, past_length):
 def model(hparams, X, past=None, scope='model', reuse=tf.AUTO_REUSE):
     with tf.variable_scope(scope, reuse=reuse):
         results = {}
+        print(X)
         batch, sequence = shape_list(X)
+        print(sequence)
 
         wpe = tf.get_variable('wpe', [hparams.n_ctx, hparams.n_embd],
                              initializer=tf.random_normal_initializer(stddev=0.01))
