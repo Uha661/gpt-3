@@ -15,11 +15,9 @@ def tensor_list(graph_location):
 
         saver = tf.train.import_meta_graph(graph_location+'.meta')
         saver.restore(sess, graph_location)
-        full_list=[]
 
         for op in tf.get_default_graph().get_operations():
-           full_list.append(str(op.values())+'\n')
-        print(full_list, file=open("Tensorlist.txt", "w"))
+           print(str(op.values()), file=open("Tensorlist.txt", "a"))
 
 
     return('done with tensor_list please check it')
