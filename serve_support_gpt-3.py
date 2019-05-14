@@ -11,13 +11,18 @@ import sys
 
 # tensor list is used to print the list of tensors, whick can be used to find the exact names of the tensor lists given 
 def tensor_list(graph_location):
+  full_list=[]
     with tf.Session(graph=tf.get_default_graph()) as sess:
 
         saver = tf.train.import_meta_graph(graph_location+'.meta')
         saver.restore(sess, graph_location)
 
         for op in tf.get_default_graph().get_operations():
-           print(str(op.values()), file=open("Tensorlist.txt", "a"))
+
+          full_list.append(str(op.values()))
+           
+
+        print(full_list, file=open("Tensorlist.txt", "w"))
 
 
     return('done with tensor_list please check it')
