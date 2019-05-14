@@ -43,17 +43,14 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         # TODO: Would be slightly faster if we called step on the entire context,
         # rather than leaving the last token transformer calculation to the while loop.
         with tf.name_scope("Serve_tensors"):
-            context=context
+            context=tf.identity(context,name=None)
             context_output = step(hparams, context[:, :-1])
             print(context)
-            print(context_output['presents'])
             top_10=tf.zeros(shape=[1,10],dtype=tf.dtypes.int32,name=None)
             top_10_probablities=tf.zeros(shape=[1,10],dtype=tf.dtypes.float32,name=None)
 
 
         def body(past, prev, output,top_10,top_10_probablities):
-            print(past)
-            print(prev)
             next_outputs = step(hparams, prev[:, tf.newaxis], past=past)
             logits = next_outputs['logits'][:, -1, :]  / tf.to_float(temperature)
            
