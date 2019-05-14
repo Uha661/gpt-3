@@ -43,6 +43,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         # TODO: Would be slightly faster if we called step on the entire context,
         # rather than leaving the last token transformer calculation to the while loop.
         with tf.name_scope("Serve_tensors"):
+            context=context
             context_output = step(hparams, context[:, :-1])
             print(context)
             print(context_output['presents'])
