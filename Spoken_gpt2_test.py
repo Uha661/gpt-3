@@ -81,8 +81,8 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
             print('"""""""')
 
 
-            print(len(context_tokens[1,:]))
-            print(len(context_tokens[:,1]))
+            print(len(context_tokens))
+
             
             out = sess.run(output, feed_dict={context: [context_tokens]})
 
