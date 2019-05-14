@@ -18,7 +18,7 @@ def tensor_list(graph_location):
         full_list=[]
 
         for op in tf.get_default_graph().get_operations():
-           full_list.append(str(op.values()))
+           full_list.append(str(op.values())+'\n')
         print(full_list, file=open("Tensorlist.txt", "w"))
 
 
