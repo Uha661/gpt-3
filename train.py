@@ -63,8 +63,7 @@ def main():
         output = model.model(hparams=hparams, X=context)
         
         loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=context[:, 1:], logits=output['logits'][:, :-1]))
-        #with tf.name_scope('checking_Tensor'):
-           # tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=1,context=context,temperature=1.0, top_k=10)
+        tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=1,context=context,temperature=1.0, top_k=10)
         
         # please check at the bottom to get the original
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
@@ -164,8 +163,8 @@ def main():
             while True:
                 if counter % 100 == 0:
                     with tf.name_scope("Serve_tensors_output"):
-                      #  context_tokens = data_sampler.sample(1)
-                      #  out = sess.run(tf_sample,feed_dict={context: args.batch_size * [context_tokens]})
+                        context_tokens = data_sampler.sample(1)
+                        out = sess.run(tf_sample,feed_dict={context: args.batch_size * [context_tokens]})
                         print("we used to generate samples here")
                 # if counter % args.sample_every == 0:
                    # generate_samples()
