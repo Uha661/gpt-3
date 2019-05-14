@@ -45,7 +45,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         with tf.name_scope("Serve_tensors"):
             
             context_output = step(hparams, context[:, :-1])
-            print(context)
+            print(context[:, :-1])
             top_10=tf.zeros(shape=[1,10],dtype=tf.dtypes.int32,name=None)
             top_10_probablities=tf.zeros(shape=[1,10],dtype=tf.dtypes.float32,name=None)
 
@@ -84,7 +84,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
             return True
         print('context')
 
-        print(context)
+        print(context[:, -1])
 
         print("context_output['presents']")
 
