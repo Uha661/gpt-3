@@ -47,7 +47,7 @@ def add_tags(graph_location,save_location):
         signature = build_signature_def(inputs={'x_input': tensor_info_x},outputs={'y_output': tensor_info_y},method_name=PREDICT_METHOD_NAME)
         
 
-sample_sequence/strided_slice/stack:0
+
         
         builder.add_meta_graph_and_variables(sess=sess, tags=[tag_constants.SERVING], signature_def_map={"serving_default": signature})
 
