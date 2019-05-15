@@ -93,7 +93,7 @@ for input_words in inputs:
   count=0
 
   print(result.outputs["y_output"])
-  break
+
   print("'")
   print("'")
   print("'")
@@ -108,3 +108,4 @@ for input_words in inputs:
      print(input_words+' ' + enc.decode(val))
      #print(result.outputs["y_output"].float_val[count])
      count=count+1
+  break
