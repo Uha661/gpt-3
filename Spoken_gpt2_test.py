@@ -16,6 +16,12 @@ import numpy as np
 import tensorflow as tf
 import json
 import model, sample_spoken_edit, encoder
+def maketree(path):
+    try:
+        os.makedirs(path)
+    except:
+        pass
+
 def save():
     maketree(os.path.join(CHECKPOINT_DIR, args.run_name))
     print('Saving',os.path.join(CHECKPOINT_DIR, args.run_name,'model-{}').format(counter))
