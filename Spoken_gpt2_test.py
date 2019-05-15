@@ -21,7 +21,7 @@ def maketree(path):
         os.makedirs(path)
     except:
         pass
-
+CHECKPOINT_DIR = 'checkpoint-test'
 def save():
     maketree(os.path.join(CHECKPOINT_DIR, args.run_name))
     print('Saving',os.path.join(CHECKPOINT_DIR, args.run_name,'model-{}').format(counter))
