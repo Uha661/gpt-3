@@ -83,7 +83,7 @@ input_data.close()
 
 for input_words in inputs:
   start_time = time.time()
-  input_words='stop it'
+  input_words='stop'
 
   result     = do_inference(hostport=ip,input_string=input_words)
 
