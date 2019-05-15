@@ -36,7 +36,7 @@ def add_tags(graph_location,save_location):
         
         builder = tf.saved_model.Builder(save_location)
   
-        input_tensor   = tf.get_default_graph().get_tensor_by_name("sample_sequence/model/Shape:0")
+        input_tensor   = tf.get_default_graph().get_tensor_by_name("Placeholder:0")
         output_tensor  = tf.get_default_graph().get_tensor_by_name("sample_sequence/while/Exit_4:0")
   
 
