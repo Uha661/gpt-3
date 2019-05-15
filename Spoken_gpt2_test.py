@@ -85,7 +85,24 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
         
         saver.restore(sess, ckpt)
         
-        save()
+        
+
+        counter=1234
+        CHECKPOINT_DIR = 'checkpoint-test'
+        counter_path = os.path.join(CHECKPOINT_DIR, 'run1', 'counter')
+        maketree(os.path.join(CHECKPOINT_DIR, 'run1'))
+        print('Saving',os.path.join(CHECKPOINT_DIR, 'run1','model-{}').format(counter))
+        saver.save(sess,os.path.join(CHECKPOINT_DIR, 'run1', 'model'),global_step=counter)
+        with open(counter_path, 'w') as fp:
+            fp.write(str(counter) + '\n')
+
+
+
+
+
+
+
+
         print(str(round((time.time() - start_time)*1000, 1))+' time to intialise model in milli Sec')
 
 
