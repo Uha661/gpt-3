@@ -20,8 +20,8 @@ def save():
     maketree(os.path.join(CHECKPOINT_DIR, args.run_name))
     print('Saving',os.path.join(CHECKPOINT_DIR, args.run_name,'model-{}').format(counter))
     saver.save(sess,os.path.join(CHECKPOINT_DIR, args.run_name, 'model'),global_step=counter)
-        with open(counter_path, 'w') as fp:
-            fp.write(str(counter) + '\n')
+    with open(counter_path, 'w') as fp:
+        fp.write(str(counter) + '\n')
 
 def interact_model(input_test_file=None, model_name='117M', length=1, temperature=1, top_k=10 ):
     """
