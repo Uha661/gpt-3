@@ -25,6 +25,7 @@ CHECKPOINT_DIR = 'checkpoint-test'
 counter_path = os.path.join(CHECKPOINT_DIR, 'run1', 'counter')
 def save():
     counter=1234
+    saver = tf.train.Saver()
     maketree(os.path.join(CHECKPOINT_DIR, 'run1'))
     print('Saving',os.path.join(CHECKPOINT_DIR, 'run1','model-{}').format(counter))
     saver.save(sess,os.path.join(CHECKPOINT_DIR, 'run1', 'model'),global_step=counter)
