@@ -22,10 +22,11 @@ def maketree(path):
     except:
         pass
 CHECKPOINT_DIR = 'checkpoint-test'
+counter_path = os.path.join(CHECKPOINT_DIR, 'run1', 'counter')
 def save():
-    maketree(os.path.join(CHECKPOINT_DIR, args.run_name))
-    print('Saving',os.path.join(CHECKPOINT_DIR, args.run_name,'model-{}').format(counter))
-    saver.save(sess,os.path.join(CHECKPOINT_DIR, args.run_name, 'model'),global_step=counter)
+    maketree(os.path.join(CHECKPOINT_DIR, 'run1'))
+    print('Saving',os.path.join(CHECKPOINT_DIR, 'run1','model-{}').format(counter))
+    saver.save(sess,os.path.join(CHECKPOINT_DIR, 'run1', 'model'),global_step=counter)
     with open(counter_path, 'w') as fp:
         fp.write(str(counter) + '\n')
 
