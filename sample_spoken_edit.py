@@ -73,7 +73,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         def cond(*args):
             return True
 
-        print(context_output['presents'])
+        
         print(context[:, -1])
         print(context)
 
