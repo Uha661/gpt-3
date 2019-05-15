@@ -16,6 +16,11 @@ import numpy as np
 import tensorflow as tf
 import json
 import model, sample_spoken_edit, encoder
+def save():
+    maketree(os.path.join(CHECKPOINT_DIR, args.run_name))
+    print('Saving',os.path.join(CHECKPOINT_DIR, args.run_name,'model-{}').format(counter))saver.save(sess,os.path.join(CHECKPOINT_DIR, args.run_name, 'model'),global_step=counter)
+        with open(counter_path, 'w') as fp:
+            fp.write(str(counter) + '\n')
 
 def interact_model(input_test_file=None, model_name='117M', length=1, temperature=1, top_k=10 ):
     """
@@ -69,6 +74,7 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
         #ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
         
         saver.restore(sess, ckpt)
+        counter=1234
         save()
         print(str(round((time.time() - start_time)*1000, 1))+' time to intialise model in milli Sec')
 
