@@ -74,7 +74,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
 
         print(context[:, :])
         print(context[:, -1])
-        print(context[-1, :])
+        print(context[:, :-1])
 
         _, _,_,tokens,token_probablities = tf.while_loop(
             cond=cond, body=body,
