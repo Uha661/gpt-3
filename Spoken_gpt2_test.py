@@ -24,6 +24,7 @@ def maketree(path):
 CHECKPOINT_DIR = 'checkpoint-test'
 counter_path = os.path.join(CHECKPOINT_DIR, 'run1', 'counter')
 def save():
+    counter=1234
     maketree(os.path.join(CHECKPOINT_DIR, 'run1'))
     print('Saving',os.path.join(CHECKPOINT_DIR, 'run1','model-{}').format(counter))
     saver.save(sess,os.path.join(CHECKPOINT_DIR, 'run1', 'model'),global_step=counter)
@@ -82,7 +83,7 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
         #ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
         
         saver.restore(sess, ckpt)
-        counter=1234
+        
         save()
         print(str(round((time.time() - start_time)*1000, 1))+' time to intialise model in milli Sec')
 
