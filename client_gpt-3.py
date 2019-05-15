@@ -105,7 +105,7 @@ for input_words in inputs:
   #result.ouputs["w_output"] has indices of top 10 predictions which can be refered back in the lookup table
 
   for  val in result.outputs["y_output"].int_val:
-     print(input_words+' ' + enc.decode(val))
+     print(input_words+' ' + enc.decode([val]))
      #print(result.outputs["y_output"].float_val[count])
      count=count+1
   break
