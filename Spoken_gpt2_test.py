@@ -65,13 +65,13 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
 
 
     with tf.Session(graph=tf.Graph()) as sess:
-        context = tf.placeholder(tf.int32, [1, None])
+        context = tf.placeholder(tf.int32, [5, None])
         
 
         output = sample_spoken_edit.sample_sequence(
-            hparams=hparams, length=length,
+            hparams=hparams, length=1,
             context=context,
-            temperature=temperature, top_k=top_k
+            temperature=temperature, top_k=10
         )
         
         
@@ -115,7 +115,7 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
             print('"""""""')
 
 
-            print(len(context_tokens))
+            print(context_tokens)
 
             
             out = sess.run(output, feed_dict={context: [context_tokens]})
