@@ -18,7 +18,8 @@ import json
 import model, sample_spoken_edit, encoder
 def save():
     maketree(os.path.join(CHECKPOINT_DIR, args.run_name))
-    print('Saving',os.path.join(CHECKPOINT_DIR, args.run_name,'model-{}').format(counter))saver.save(sess,os.path.join(CHECKPOINT_DIR, args.run_name, 'model'),global_step=counter)
+    print('Saving',os.path.join(CHECKPOINT_DIR, args.run_name,'model-{}').format(counter))
+    saver.save(sess,os.path.join(CHECKPOINT_DIR, args.run_name, 'model'),global_step=counter)
         with open(counter_path, 'w') as fp:
             fp.write(str(counter) + '\n')
 
