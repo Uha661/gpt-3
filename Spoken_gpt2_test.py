@@ -69,6 +69,7 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
         #ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
         
         saver.restore(sess, ckpt)
+        save()
         print(str(round((time.time() - start_time)*1000, 1))+' time to intialise model in milli Sec')
 
 
