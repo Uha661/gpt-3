@@ -52,15 +52,6 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         def body(past, prev, output,top_10,top_10_probablities):
             past=tf.identity(past,name=None)
             prev=tf.identity(prev,name=None)
-
-            print('past')
-            
-
-            print(past)
-
-            print('prev')
-            print(prev)
-            
             next_outputs = step(hparams, prev[:, tf.newaxis], past=past)
             logits = next_outputs['logits'][:, -1, :]  / tf.to_float(temperature)
            
@@ -82,13 +73,10 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
 
         def cond(*args):
             return True
-        print('context')
-
-        print(context[:, -1])
-
-        print("context_output['presents']")
 
         print(context_output['presents'])
+        print(context[:, -1])
+        print(context)
 
         _, _,_,tokens,token_probablities = tf.while_loop(
             cond=cond, body=body,
