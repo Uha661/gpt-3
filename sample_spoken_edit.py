@@ -42,12 +42,11 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         # Don't feed the last context token -- leave that to the loop below
         # TODO: Would be slightly faster if we called step on the entire context,
         # rather than leaving the last token transformer calculation to the while loop.
-        with tf.name_scope("Serve_tensors"):
             
-            context_output = step(hparams, context[:, :-1])
-            print(context[:, :-1])
-            top_10=tf.zeros(shape=[1,10],dtype=tf.dtypes.int32,name=None)
-            top_10_probablities=tf.zeros(shape=[1,10],dtype=tf.dtypes.float32,name=None)
+        context_output = step(hparams, context[:, :-1])
+        print(context[:, :-1])
+        top_10=tf.zeros(shape=[1,10],dtype=tf.dtypes.int32,name=None)
+        top_10_probablities=tf.zeros(shape=[1,10],dtype=tf.dtypes.float32,name=None)
 
 
         def body(past, prev, output,top_10,top_10_probablities):
@@ -61,6 +60,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
 
             print('prev')
             print(prev)
+            
             next_outputs = step(hparams, prev[:, tf.newaxis], past=past)
             logits = next_outputs['logits'][:, -1, :]  / tf.to_float(temperature)
            
