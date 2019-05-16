@@ -85,7 +85,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
                 top_10_probablities,
             ],
             shape_invariants=[
-                tf.TensorShape([5]),              #model.past_shape(hparams=hparams)
+                tf.TensorShape(model.past_shape(hparams=hparams)),
                 tf.TensorShape([1]),
                 tf.TensorShape([1, None]),
                 tf.TensorShape([1,10]),
@@ -94,5 +94,5 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
             ],
             back_prop=False,
         )
-        
+        print(model.past_shape(hparams=hparams))
         return tokens,token_probablities
