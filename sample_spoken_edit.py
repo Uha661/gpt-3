@@ -44,8 +44,8 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         # rather than leaving the last token transformer calculation to the while loop.
             
         context_output = step(hparams, context[:, :-1])
-        top_10=tf.zeros(shape=[5,10],dtype=tf.dtypes.int32,name=None)
-        top_10_probablities=tf.zeros(shape=[5,10],dtype=tf.dtypes.float32,name=None)
+        top_10=tf.zeros(shape=[1,10],dtype=tf.dtypes.int32,name=None)
+        top_10_probablities=tf.zeros(shape=[1,10],dtype=tf.dtypes.float32,name=None)
 
 
         def body(past, prev, output,top_10,top_10_probablities):
@@ -71,6 +71,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
 
         def cond(*args):
             return True
+        
 
 
 
@@ -86,10 +87,10 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
             ],
             shape_invariants=[
                 tf.TensorShape(model.past_shape(hparams=hparams)),
-                tf.TensorShape([5]),
-                tf.TensorShape([5, None]),
-                tf.TensorShape([5,10]),
-                tf.TensorShape([5,10]),
+                tf.TensorShape([1]),
+                tf.TensorShape([1, None]),
+                tf.TensorShape([1,10]),
+                tf.TensorShape([1,10]),
 
             ],
             back_prop=False,
