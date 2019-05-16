@@ -103,7 +103,7 @@ def Test_and_save_simple_graph(input_test_file=None,Original=True, model_name='1
 
 
 
-interact_model(input_test_file='gpt-3_test_input.json',Original=True)
+Test_and_save_simple_graph(input_test_file='gpt-3_test_input.json',Original=True)
 
 
 
