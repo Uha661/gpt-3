@@ -37,14 +37,19 @@ def add_tags(graph_location,save_location):
         builder = tf.saved_model.Builder(save_location)
   
         input_tensor   = tf.get_default_graph().get_tensor_by_name("Placeholder:0")
-        output_tensor  = tf.get_default_graph().get_tensor_by_name("sample_sequence/while/Exit_4:0")
+        output_tensor1  = tf.get_default_graph().get_tensor_by_name("sample_sequence/while/Exit_4:0")
+        output_tensor2  = tf.get_default_graph().get_tensor_by_name("sample_sequence/while/Exit_5:0")
+        
+
   
 
-        tensor_info_x = tf.saved_model.utils.build_tensor_info(input_tensor)
+        tensor_info_input = tf.saved_model.utils.build_tensor_info(input_tensor)
          # lets look where input_tensor is defined
-        tensor_info_y = tf.saved_model.utils.build_tensor_info(output_tensor)
+        tensor_info_output1 = tf.saved_model.utils.build_tensor_info(output_tensor1)
+        tensor_info_output2 = tf.saved_model.utils.build_tensor_info(output_tensor2)
+
         
-        signature = build_signature_def(inputs={'x_input': tensor_info_x},outputs={'y_output': tensor_info_y},method_name=PREDICT_METHOD_NAME)
+        signature = build_signature_def(inputs={'x_input': tensor_info_input},outputs={'y_output': tensor_info_output1,'z_output': tensor_info_output2},method_name=PREDICT_METHOD_NAME)
         
 
 
