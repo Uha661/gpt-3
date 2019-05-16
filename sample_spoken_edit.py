@@ -72,9 +72,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         def cond(*args):
             return True
 
-        print(context[:, :])
-        print(context[:, -1])
-        print(context[:, :-1])
+
 
         _, _,_,tokens,token_probablities = tf.while_loop(
             cond=cond, body=body,
@@ -88,7 +86,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
             ],
             shape_invariants=[
                 tf.TensorShape(model.past_shape(hparams=hparams)),
-                tf.TensorShape([1]),
+                tf.TensorShape([5]),
                 tf.TensorShape([1, None]),
                 tf.TensorShape([1,10]),
                 tf.TensorShape([1,10]),
