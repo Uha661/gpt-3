@@ -50,7 +50,7 @@ def do_inference(hostport,input_string):
 
   request.inputs['x_input'].CopyFrom(tensor)
   
-  result = stub.Predict(request, 15.0) 
+  result = stub.Predict(request, 5.0) 
 
   
 
@@ -83,7 +83,7 @@ input_data.close()
 
 for input_words in inputs:
   start_time = time.time()
- # input_words='stop'
+ 
 
   result     = do_inference(hostport=ip,input_string=input_words)
 
@@ -93,7 +93,7 @@ for input_words in inputs:
 
   count=0
 
-  print(result.outputs["y_output"])
+  
 
   print("'")
   print("'")
@@ -107,6 +107,6 @@ for input_words in inputs:
 
   for  val in result.outputs["y_output"].int_val:
      print(input_words+' ' + enc.decode([val]))
-     #print(result.outputs["y_output"].float_val[count])
+     print(result.outputs["z_output"].float_val[count])
      count=count+1
   
