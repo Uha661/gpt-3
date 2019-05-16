@@ -71,7 +71,8 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
 
         def cond(*args):
             return True
-        print(model.past_shape(hparams=hparams))
+        print(context[:,-1])
+        print(context_output['presents'])
 
 
 
