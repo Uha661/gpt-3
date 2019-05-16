@@ -71,8 +71,6 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
 
         def cond(*args):
             return True
-        print(context[:,-1])
-        print(context_output['presents'])
 
 
 
@@ -90,8 +88,8 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
                 tf.TensorShape(model.past_shape(hparams=hparams)),
                 tf.TensorShape([5]),
                 tf.TensorShape([5, None]),
-                tf.TensorShape([1,10]),
-                tf.TensorShape([1,10]),
+                tf.TensorShape([5,10]),
+                tf.TensorShape([5,10]),
 
             ],
             back_prop=False,
