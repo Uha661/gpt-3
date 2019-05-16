@@ -16,37 +16,18 @@ import numpy as np
 import tensorflow as tf
 import json
 import model, sample_spoken_edit, encoder
-def maketree(path):
-    try:
-        os.makedirs(path)
-    except:
-        pass
 
-def interact_model(input_test_file=None, model_name='117M', length=1, temperature=1, top_k=10 ):
-    """
-    Interactively run the model
-    :model_name=117M : String, which model to use
-    :seed=None : Integer seed for random number generators, fix seed to reproduce
-     results
-    :nsamples=1 : Number of samples to return total
-    :batch_size=1 : Number of batches (only affects speed/memory).  Must divide nsamples.
-    :length=None : Number of tokens in generated text, if None (default), is
-     determined by model hyperparameters
-    :temperature=1 : Float value controlling randomness in boltzmann
-     distribution. Lower temperature results in less random completions. As the
-     temperature approaches zero, the model will become deterministic and
-     repetitive. Higher temperature results in more random completions.
-    :top_k=0 : Integer value controlling diversity. 1 means only 1 word is
-     considered for each step (token), resulting in deterministic completions,
-     while 40 means 40 words are considered at each step. 0 (default) is a
-     special setting meaning no restrictions. 40 generally is a good value.
-    """
+
+def Test_and_save_simple_graph(input_test_file=None,Original=True, model_name='117M', length=1, temperature=1, top_k=10 ):
+
+    # A json file that has all the input test words
     test_input=open(input_test_file)
     inputs_words = json.load(test_input)
     test_input.close()
     
 
     start_time = time.time()
+    # enc is the encoder from the model
     enc = encoder.get_encoder(model_name)
     hparams = model.default_hparams()
     with open(os.path.join('models', model_name, 'hparams.json')) as f:
@@ -57,7 +38,7 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
     with tf.Session(graph=tf.Graph()) as sess:
         context = tf.placeholder(tf.int32, [1, None])
         
-
+        # This intilaises the a small model only to test, but this model still has same trained weights used in the trained model. 
         output = sample_spoken_edit.sample_sequence(
             hparams=hparams, length=1,
             context=context,
@@ -68,19 +49,21 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
         saver = tf.train.Saver()
         
         # Please make sure that we are passing the checkpoints of trained model 
+        if(Original):
+            ckpt = tf.train.latest_checkpoint(os.path.join('models', model_name)) 
+        else: 
+            ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
         
-        ckpt = tf.train.latest_checkpoint(os.path.join('models', model_name)) 
-        # the above line can be un commented if we want to test with original model 
-        #ckpt = tf.train.latest_checkpoint(os.path.join('checkpoint', 'run1'))
-        
+        # Restores the graph from saved model 
         saver.restore(sess, ckpt)
         
         
 
-        #counter=1234
+        
+
+        # saves the test graph which is smaller and only has sample sequence process in it.
         saver.save(sess,os.path.join('checkpoint-test', 'run1', 'model-test'))
-        #with open(counter_path, 'w') as fp:
-        #   fp.write(str(counter) + '\n')
+        print('saving the model at checkpoint-test/run1/model-test')
 
 
 
@@ -88,7 +71,7 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
 
 
 
-
+        # this print is to know time taken to load model 
         print(str(round((time.time() - start_time)*1000, 1))+' time to intialise model in milli Sec')
 
 
@@ -99,16 +82,13 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
             print('"""""""')
             print('"""""""')
             print('"""""""')
-
-
-            
-
-            
+            # Feed context place holders with input words  
             out = sess.run(output, feed_dict={context: [context_tokens]})
 
 
             print(str(round((time.time() - start_time)*1000, 1))+'ms')
             i=0
+            #printing out the predictions.
 
             for word in out[0][0]:
             	wordarray = [ word ]
@@ -116,13 +96,14 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
             	print( raw_text+' ' + enc.decode(wordarray) )
             	i+=1
             print("")
+
     
     return print('done with predictions')
     
 
 
 
-interact_model(input_test_file='gpt-3_test_input.json')
+interact_model(input_test_file='gpt-3_test_input.json',Original=True)
 
 
 
