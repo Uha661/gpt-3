@@ -44,7 +44,7 @@ def do_inference(hostport,input_string):
 # reshaping the input tensors as defined in signature defnition
   print(len(ids))
 
-  tensor = tf.contrib.util.make_tensor_proto(ids, dtype=tf.int32,shape=[1,])
+  tensor = tf.contrib.util.make_tensor_proto(ids, dtype=tf.int32,shape=[2,])
   
 
 
