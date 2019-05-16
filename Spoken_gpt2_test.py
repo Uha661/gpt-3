@@ -21,16 +21,6 @@ def maketree(path):
         os.makedirs(path)
     except:
         pass
-CHECKPOINT_DIR = 'checkpoint-test'
-counter_path = os.path.join(CHECKPOINT_DIR, 'run1', 'counter')
-def save():
-    counter=1234
-    saver = tf.train.Saver()
-    maketree(os.path.join(CHECKPOINT_DIR, 'run1'))
-    print('Saving',os.path.join(CHECKPOINT_DIR, 'run1','model-{}').format(counter))
-    saver.save(sess,os.path.join(CHECKPOINT_DIR, 'run1', 'model'),global_step=counter)
-    with open(counter_path, 'w') as fp:
-        fp.write(str(counter) + '\n')
 
 def interact_model(input_test_file=None, model_name='117M', length=1, temperature=1, top_k=10 ):
     """
@@ -115,7 +105,7 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
             print('"""""""')
 
 
-            print(context_tokens)
+            
 
             
             out = sess.run(output, feed_dict={context: [context_tokens]})
@@ -136,17 +126,9 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
 
 
 
-#interact_model(input_test_file='gpt-3_test_input.json', model_name='117M',seed=None,nsamples=1,batch_size=1,length=1,temperature=1,top_k=10)
 interact_model(input_test_file='gpt-3_test_input.json')
 
 
-# my intial plan is to run the model with in the for loop of inputs from json file, but if we do that each time we have to load the model and do single prediction
-
-# dis advantage of this is ruturn statements 
-
-# we should try nsamples=10 to know how it looks. i am not sure exact fucntionality top_k=10 is doing here, (it say Top_k is number of words considered at a time what if this is like considering )
-
-#  try even  length =10 , as it says number of tokens returned by the model
 
 
 
