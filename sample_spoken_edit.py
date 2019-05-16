@@ -71,6 +71,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
 
         def cond(*args):
             return True
+        print(model.past_shape(hparams=hparams))
 
 
 
@@ -94,5 +95,5 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
             ],
             back_prop=False,
         )
-        print(model.past_shape(hparams=hparams))
+        
         return tokens,token_probablities
