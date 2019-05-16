@@ -65,7 +65,7 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
 
 
     with tf.Session(graph=tf.Graph()) as sess:
-        context = tf.placeholder(tf.int32, [5, None])
+        context = tf.placeholder(tf.int32, [1, None])
         
 
         output = sample_spoken_edit.sample_sequence(
@@ -130,7 +130,6 @@ def interact_model(input_test_file=None, model_name='117M', length=1, temperatur
             	print( raw_text+' ' + enc.decode(wordarray) )
             	i+=1
             print("")
-            break
     
     return print('done with predictions')
     
