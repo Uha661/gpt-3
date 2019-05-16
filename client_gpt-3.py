@@ -42,7 +42,7 @@ def do_inference(hostport,input_string):
  
 
 # reshaping the input tensors as defined in signature defnition
-  print(len(ids))
+
 
   tensor = tf.contrib.util.make_tensor_proto(ids, dtype=tf.int32,shape=[1,len(ids)])
   
@@ -87,7 +87,7 @@ for input_words in inputs:
 
   result     = do_inference(hostport=ip,input_string=input_words)
 
-  print((time.time() - start_time))
+  print(str(round((time.time() - start_time)*1000, 1))+'ms')
 
 
 
