@@ -39,11 +39,10 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
         }
 
     with tf.name_scope('sample_sequence'):
-        # Don't feed the last context token -- leave that to the loop below
-        # TODO: Would be slightly faster if we called step on the entire context,
-        # rather than leaving the last token transformer calculation to the while loop.
             
         context_output = step(hparams, context[:, :-1])
+
+        # initializing tensors of shape (1,10) to copy top_10 predictions
         top_10=tf.zeros(shape=[1,10],dtype=tf.dtypes.int32,name=None)
         top_10_probablities=tf.zeros(shape=[1,10],dtype=tf.dtypes.float32,name=None)
 
@@ -54,6 +53,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
             logits = next_outputs['logits'][:, -1, :]  / tf.to_float(temperature)
            
 
+            # acessing top_10 predictions from logits
             top_10_probablities,top_10=tf.nn.top_k(logits,k=top_k,sorted=True,name='probablities')
             
 
@@ -71,10 +71,10 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
 
         def cond(*args):
             return True
-        
 
 
 
+            # we have added top_10 and top_10_probablities as the loop_vars and added shape_invariants to the loop. 
         _, _,_,tokens,token_probablities = tf.while_loop(
             cond=cond, body=body,
             maximum_iterations=length,
