@@ -81,10 +81,12 @@ def Test_and_save_simple_graph(input_test_file=None,Original=True, model_name='1
         for raw_text in inputs_words:
             start_time = time.time()
             context_tokens = enc.encode(raw_text)
+            print()
 
             print('"""""""')
             print('"""""""')
             print('"""""""')
+            print(context_tokens)
             # Feed context place holders with input words  
             out = sess.run(output, feed_dict={context: [context_tokens]})
 
