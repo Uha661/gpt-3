@@ -36,7 +36,7 @@ def Test_and_save_simple_graph(input_test_file=None,Original=True, model_name='1
 
 
     with tf.Session(graph=tf.Graph()) as sess:
-        tf.enable_resource_variables()
+        #tf.enable_resource_variables()
         # i would add thi shere beacuse our input X is intiated right below it.
 
         context = tf.placeholder(tf.int32, [1, None])
