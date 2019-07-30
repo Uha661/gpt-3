@@ -23,9 +23,7 @@ def top_k_logits(logits, k):
     )
 
 
-def sample_sequence(*, hparams, length, start_token=None, context=None, temperature=1, top_k=0):
-
-
+def sample_sequence(*, hparams, length, start_token=None, context=None, temperature=1, top_k=10):
 
     def step(hparams, tokens, past=None):
         lm_output = model.model(hparams=hparams, X=tokens, past=past, reuse=tf.AUTO_REUSE)
@@ -42,9 +40,9 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
             
         context_output = step(hparams, context[:, :-1])
 
-        # initializing tensors of shape (1,10) to copy top_10 predictions
-        top_10=tf.zeros(shape=[1,10],dtype=tf.dtypes.int32,name=None)
-        top_10_probablities=tf.zeros(shape=[1,10],dtype=tf.dtypes.float32,name=None)
+        # initializing tensors of shape (1,top_k) to copy top_10 predictions
+        top_10 = tf.zeros(shape=[1,top_k],dtype=tf.dtypes.int32,name=None)
+        top_10_probablities = tf.zeros(shape=[1,top_k],dtype=tf.dtypes.float32,name=None)
 
 
         def body(past, prev, output,top_10,top_10_probablities):
@@ -54,7 +52,7 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
            
 
             # acessing top_10 predictions from logits
-            top_10_probablities,top_10=tf.nn.top_k(logits,k=top_k,sorted=True,name='probablities')
+            top_10_probablities, top_10 = tf.nn.top_k(logits,k=top_k,sorted=True,name='probablities')
             
 
             logits = top_k_logits(logits, k=top_k)
@@ -89,8 +87,8 @@ def sample_sequence(*, hparams, length, start_token=None, context=None, temperat
                 tf.TensorShape(model.past_shape(hparams=hparams)),
                 tf.TensorShape([1]),
                 tf.TensorShape([1, None]),
-                tf.TensorShape([1,10]),
-                tf.TensorShape([1,10]),
+                tf.TensorShape([1,top_k]),
+                tf.TensorShape([1,top_k]),
 
             ],
             back_prop=False,

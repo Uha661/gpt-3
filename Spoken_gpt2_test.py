@@ -37,7 +37,7 @@ def Test_and_save_simple_graph(input_test_file=None,Original=True, model_name='1
         output = sample_spoken_edit.sample_sequence(
             hparams=hparams, length=1,
             context=context,
-            temperature=temperature, top_k=10
+            temperature=temperature, top_k=top_k
         )
         
         

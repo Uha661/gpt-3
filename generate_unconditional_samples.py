@@ -15,7 +15,7 @@ def sample_model(
     batch_size=1,
     length=None,
     temperature=1,
-    top_k=0,
+    top_k=10,
 ):
     """
     Run the sample_model
