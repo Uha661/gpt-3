@@ -57,7 +57,7 @@ def Test_and_save_simple_graph(input_test_file=None,Original=True, model_name='1
         
 
         # saves the test graph which is smaller and only has sample sequence process in it.
-        saver.save(sess,os.path.join('checkpoint-test', 'run1', 'model-test'))
+        saver.save(sess,os.path.join('checkpoint', 'run1', 'model-saved'))
         print('saving the model at checkpoint-test/run1/model-test')
 
 
