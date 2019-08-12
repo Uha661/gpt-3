@@ -63,7 +63,7 @@ def main():
         output = model.model(hparams=hparams, X=context)
         
         loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=context[:, 1:], logits=output['logits'][:, :-1]))
-        tf_sample = sample_spoken_edit.sample_sequence(hparams=hparams, length=1,context=context,temperature=1.0, top_k=10)
+        tf_sample = sample_spoken_edit.sample_sequence( hparams=hparams, length=1, context=context, temperature=1.0, top_k=40 )
         
         # please check at the bottom to get the original
         train_vars = [v for v in tf.trainable_variables() if 'model' in v.name]
@@ -78,16 +78,13 @@ def main():
                 opt_apply = tf.train.AdamOptimizer( learning_rate=args.learning_rate).minimize( loss, var_list=train_vars )
                 summary_loss = tf.summary.scalar('loss', loss)
 
-
         summary_log = tf.summary.FileWriter(os.path.join(CHECKPOINT_DIR, args.run_name))
         saver = tf.train.Saver(
             var_list=train_vars,
             max_to_keep=5,
             keep_checkpoint_every_n_hours=2)
-        
 
         sess.run(tf.global_variables_initializer())
-        
 
         if args.restore_from == 'latest':
             ckpt = tf.train.latest_checkpoint(
@@ -101,17 +98,23 @@ def main():
                 os.path.join('models', args.model_name))
         else:
             ckpt = tf.train.latest_checkpoint(args.restore_from)
+
         print('Loading checkpoint', ckpt)
+
         saver.restore(sess, ckpt)
 
         print('Loading dataset...')
+
         chunks = load_dataset(enc, args.dataset, args.combine)
         data_sampler = Sampler(chunks)
+
         print('dataset has', data_sampler.total_size, 'tokens')
+
         print('Training...')
 
         counter = 1
         counter_path = os.path.join(CHECKPOINT_DIR, args.run_name, 'counter')
+
         if os.path.exists(counter_path):
             # Load the step number if we're resuming a run
             # Add 1 so we don't immediately try to save again
@@ -165,7 +168,8 @@ def main():
                     with tf.name_scope("Serve_tensors_output"):
                         context_tokens = data_sampler.sample(1)
                         out = sess.run(tf_sample,feed_dict={context: args.batch_size * [context_tokens]})
-                        print("we used to generate samples here")
+                        # print("we used to generate samples here")
+                        print("-")
                 # if counter % args.sample_every == 0:
                    # generate_samples()
 
