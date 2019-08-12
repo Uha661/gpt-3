@@ -32,7 +32,7 @@ parser.add_argument('--restore_from', type=str, default='latest', help='Either "
 parser.add_argument('--run_name', type=str, default='run1', help='Run id. Name of subdirectory in checkpoint/ and samples/')
 parser.add_argument('--sample_every', metavar='N', type=int, default=100, help='Generate samples every N steps')
 parser.add_argument('--sample_length', metavar='TOKENS', type=int, default=1023, help='Sample this many tokens')
-parser.add_argument('--sample_num', metavar='N', type=int, default=1, help='Generate this many samples')
+parser.add_argument('--sample_num', metavar='N', type=int, default=100, help='Generate this many samples')
 parser.add_argument('--save_every', metavar='N', type=int, default=1000, help='Write a checkpoint every N steps')
 
 
@@ -144,7 +144,8 @@ def main():
                     feed_dict={context: args.batch_size * [context_tokens]})
             
                 for i in range(min(args.sample_num - index, args.batch_size)):
-                    text = enc.decode(out[i])
+                    # text = enc.decode(dict(np.ndenumerate(out[i][0])))
+                    text = enc.decode(out[i][0])
                     text = '======== SAMPLE {} ========\n{}\n'.format(
                         index + 1, text)
                     all_text.append(text)
@@ -172,7 +173,6 @@ def main():
                         print("-")
                 # if counter % args.sample_every == 0:
                    # generate_samples()
-
                 if args.accumulate_gradients > 1:
                     sess.run(opt_reset)
                     for _ in range(args.accumulate_gradients):
