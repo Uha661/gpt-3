@@ -3,6 +3,7 @@
 import os
 import json
 import regex as re
+from gpt2_client import GPT2Client
 from functools import lru_cache
 
 @lru_cache()
@@ -106,6 +107,11 @@ class Encoder:
         return text
 
 def get_encoder(model_name):
+    #edit
+    gpt2 = GPT2Client(model_name)
+    gpt2.load_model() # if you already have the model checkpoints, then it will automatically search for it and use them
+    gpt2.generate(interactive=True)
+    #edit
     with open(os.path.join('models', model_name, 'encoder.json'), 'r') as f:
         encoder = json.load(f)
     with open(os.path.join('models', model_name, 'vocab.bpe'), 'r', encoding="utf-8") as f:
